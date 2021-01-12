@@ -1,5 +1,5 @@
 # Dependent Select Box
-Dependent Select Box for [Nette Framework](https://nette.org) and PHP 5.6.0 or higher.
+Dependent Select Box for [Nette Framework](https://nette.org) and PHP 7.1 or higher.
 
 [![Build Status](https://travis-ci.org/NasExt/DependentSelectBox.svg?branch=master)](https://travis-ci.org/NasExt/DependentSelectBox)
 [![Coverage Status](https://coveralls.io/repos/github/NasExt/DependentSelectBox/badge.svg?branch=master)](https://coveralls.io/github/NasExt/DependentSelectBox?branch=master)
@@ -7,7 +7,7 @@ Dependent Select Box for [Nette Framework](https://nette.org) and PHP 5.6.0 or h
 ## Installation
 The best way to install NasExt/DependentSelectBox is using [Composer](http://getcomposer.org/):
 ```sh
-$ composer require nasext/dependent-select-box
+$ composer require jakercz/dependent-select-box
 ```
 
 
