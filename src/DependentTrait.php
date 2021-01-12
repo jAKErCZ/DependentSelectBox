@@ -77,8 +77,8 @@ trait DependentTrait
 	 * @param string|int $value
 	 * @return self
 	 */
-	public function setValue($value)
-	{
+	public function setValue($value): DependentTrait
+    {
 		$this->tempValue = $value;
 		return $this;
 	}
@@ -89,8 +89,8 @@ trait DependentTrait
 	 * @param bool $useKeys
 	 * @return self
 	 */
-	public function setItems(array $items, bool $useKeys = true)
-	{
+	public function setItems(array $items, bool $useKeys = true): DependentTrait
+    {
 		parent::setItems($items, $useKeys);
 
 		if (!in_array($this->tempValue, [null, '', []], true)) {
@@ -106,8 +106,8 @@ trait DependentTrait
 	 * @return NasExt\Forms\DependentData
 	 * @throws NasExt\Forms\DependentCallbackException
 	 */
-	private function getDependentData(array $args = [])
-	{
+	private function getDependentData(array $args = []): DependentData
+    {
 		if ($this->dependentCallback === null) {
 			throw new NasExt\Forms\DependentCallbackException('Dependent callback for "' . $this->getHtmlId() . '" must be set!');
 		}
@@ -126,8 +126,8 @@ trait DependentTrait
 	 * @param callable $callback
 	 * @return self
 	 */
-	public function setDependentCallback(callable $callback)
-	{
+	public function setDependentCallback(callable $callback): DependentTrait
+    {
 		$this->dependentCallback = $callback;
 		return $this;
 	}
@@ -137,8 +137,8 @@ trait DependentTrait
 	 * @param bool $value
 	 * @return self
 	 */
-	public function setDisabledWhenEmpty($value = true)
-	{
+	public function setDisabledWhenEmpty($value = true): DependentTrait
+    {
 		$this->disabledWhenEmpty = $value;
 		return $this;
 	}
@@ -148,8 +148,8 @@ trait DependentTrait
 	 * @param Nette\Forms\Controls\BaseControl $parent
 	 * @return string
 	 */
-	private function getNormalizeName(Nette\Forms\Controls\BaseControl $parent)
-	{
+	private function getNormalizeName(Nette\Forms\Controls\BaseControl $parent): string
+    {
 		return str_replace('-', '_', $parent->getHtmlId());
 	}
 }

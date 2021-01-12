@@ -4,11 +4,11 @@ DependentSelectBox for [Nette Framework](https://nette.org). This dependent sele
 ## Installation
 The best way to install NasExt/DependentSelectBox is using [Composer](http://getcomposer.org/):
 ```sh
-$ composer require nasext/dependent-select-box
+$ composer require jakercz/dependent-select-box
 ```
 
 
-Initialization in your `bootstrap.php`:
+Initialization in your `Bootstrap.php`:
 ```php
 NasExt\Forms\DependentExtension::registerControls();
 ```
@@ -30,7 +30,7 @@ dependentSelectBox.js
 Initialize DependentSelectBox:
 ```js
 // @param callback a handler to be called when Ajax requests complete
-$('[data-dependentselectbox]').dependentSelectBox(callback);
+$('[data-dependentselectbox]').dependentSelectBox();
 ```
 
 

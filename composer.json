@@ -1,5 +1,5 @@
 {
-	"name": "nasext/dependent-select-box",
+	"name": "jakercz/dependent-select-box",
 	"type": "library",
 	"description": "Dependent Select Box for Nette Framework.",
 	"keywords": ["nette", "nasext", "DependentSelectBox"],
@@ -14,10 +14,14 @@
 		{
 			"name": "Ales Wita",
 			"email": "aleswita+github@gmail.com"
+		},
+		{
+			"name": "Dominik Korčák",
+			"email": "studio@jakercz-studios.eu"
 		}
 	],
 	"require": {
-		"php": "^7.1",
+		"php": "^7.1 || ~8.0.0",
 		"nette/application": "^2.4 || ^3.0.0",
 		"nette/forms": "^2.4 || ^3.0.0",
 		"nette/utils": "^2.4 || ^3.0.0"

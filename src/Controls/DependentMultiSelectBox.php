@@ -31,11 +31,11 @@ class DependentMultiSelectBox extends Nette\Forms\Controls\MultiSelectBox implem
 	const SIGNAL_NAME = DependentSelectBox::SIGNAL_NAME;
 
 
-	/**
-	 * @param string $label
-	 * @param array<int, Nette\Forms\IControl> $parents
-	 */
-	public function __construct($label, array $parents)
+    /**
+     * @param string $label
+     * @param array<int, Nette\Forms\IControl> $parents
+     */
+	public function __construct(string $label, array $parents)
 	{
 		$this->parents = $parents;
 		parent::__construct($label);
@@ -47,8 +47,8 @@ class DependentMultiSelectBox extends Nette\Forms\Controls\MultiSelectBox implem
 	 * @param bool
 	 * @return self
 	 */
-	public function setDisabled($value = true)
-	{
+	public function setDisabled($value = true): DependentMultiSelectBox
+    {
 		if (is_array($value)) {
 			throw new Nette\InvalidArgumentException('NasExt\\Forms\\Controls\\DependentMultiSelectBox not supported disabled items!');
 		}
@@ -66,10 +66,11 @@ class DependentMultiSelectBox extends Nette\Forms\Controls\MultiSelectBox implem
 	}
 
 
-    	/**
-	 * @param string $signal
-	 * @return void
-	 */
+    /**
+     * @param string $signal
+     * @return void
+     * @throws NasExt\Forms\DependentCallbackException
+     */
 	public function signalReceived(string $signal) : void
 	{
 		$presenter = $this->lookup('Nette\\Application\\UI\\Presenter');
