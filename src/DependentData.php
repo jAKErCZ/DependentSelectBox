@@ -53,8 +53,8 @@ class DependentData
 	/**
 	 * @return array
 	 */
-	public function getItems(): array
-    {
+	public function getItems()
+	{
 		return $this->items;
 	}
 
@@ -63,8 +63,8 @@ class DependentData
 	 * @param array $items
 	 * @return self
 	 */
-	public function setItems(array $items): DependentData
-    {
+	public function setItems(array $items)
+	{
 		$this->items = $items;
 		return $this;
 	}
@@ -83,8 +83,8 @@ class DependentData
 	 * @param string|int $value
 	 * @return self
 	 */
-	public function setValue($value): DependentData
-    {
+	public function setValue($value)
+	{
 		$this->value = $value;
 		return $this;
 	}
@@ -93,18 +93,18 @@ class DependentData
 	/**
 	 * @return string
 	 */
-	public function getPrompt(): string
-    {
+	public function getPrompt()
+	{
 		return $this->prompt;
 	}
 
 
-    /**
-     * @param string $value
-     * @return self
-     */
-	public function setPrompt(string $value): DependentData
-    {
+	/**
+	 * @param string $value
+	 * @return self
+	 */
+	public function setPrompt($value)
+	{
 		$this->prompt = $value;
 		return $this;
 	}
@@ -114,8 +114,8 @@ class DependentData
 	 * @param array $disabledItems
 	 * @return array
 	 */
-	public function getPreparedItems($disabledItems = null): array
-    {
+	public function getPreparedItems($disabledItems = null)
+	{
 		$items = [];
 		foreach ($this->items as $key => $item) {
 			$elements = [];
@@ -141,14 +141,14 @@ class DependentData
 	}
 
 
-    /**
-     * @param string $key
-     * @param mixed $item
-     * @param array|null $disabledItems
-     * @return Nette\Utils\Html
-     */
-	private function getPreparedElement(string $key, $item, $disabledItems = null): Nette\Utils\Html
-    {
+	/**
+	 * @param string $key
+	 * @param mixed $item
+	 * @param array|null $disabledItems
+	 * @return Nette\Utils\Html
+	 */
+	private function getPreparedElement($key, $item, $disabledItems = null)
+	{
 		if (!($item instanceof Nette\Utils\Html)) {
 			$el = Nette\Utils\Html::el('option')->value($key)->setText($item);
 
@@ -165,11 +165,11 @@ class DependentData
 	}
 
 
-    /**
-     * @param array &$items
-     * @param Nette\Utils\Html $el
-     */
-	private function addElementToItemsList(array &$items, Nette\Utils\Html $el)
+	/**
+	 * @param array &$items
+	 * @param Nette\Utils\Html $el
+	 */
+	private function addElementToItemsList(&$items, $el)
 	{
 		$items[$el->getAttribute('value')] = [
 			'key' => $el->getValue(),

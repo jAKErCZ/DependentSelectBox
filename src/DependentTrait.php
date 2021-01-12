@@ -21,135 +21,135 @@ use Nette;
  */
 trait DependentTrait
 {
-	/** @var array */
-	private $parents;
+    /** @var array */
+    private $parents;
 
-	/** @var callable */
-	private $dependentCallback;
+    /** @var callable */
+    private $dependentCallback;
 
-	/** @var bool */
-	private $disabledWhenEmpty;
+    /** @var bool */
+    private $disabledWhenEmpty;
 
-	/** @var mixed */
-	private $tempValue;
-
-
-	/**
-	 * @return Nette\Utils\Html
-	 */
-	public function getControl() : Nette\Utils\Html
-	{
-		$this->tryLoadItems();
-
-		$attrs = [];
-		$control = parent::getControl();
-		$form = $this->getForm();
-
-		$parents = [];
-		foreach ($this->parents as $parent) {
-			$parents[$this->getNormalizeName($parent)] = $parent->getHtmlId();
-		}
-
-		$attrs['data-dependentselectbox-parents'] = Nette\Utils\Json::encode($parents);
-		$attrs['data-dependentselectbox'] = $form->getPresenter()->link($this->lookupPath('Nette\\Application\\UI\\Presenter') . Nette\ComponentModel\IComponent::NAME_SEPARATOR . self::SIGNAL_NAME . '!');
-
-		$control->addAttributes($attrs);
-		return $control;
-	}
+    /** @var mixed */
+    private $tempValue;
 
 
-	/**
-	 * @return string|int
-	 */
-	public function getValue()
-	{
-		$this->tryLoadItems();
-
-		if (!in_array($this->tempValue, [null, '', []], true)) {
-			return $this->tempValue;
-		}
-
-		return parent::getValue();
-	}
-
-
-	/**
-	 * @param string|int $value
-	 * @return self
-	 */
-	public function setValue($value): DependentTrait
+    /**
+     * @return Nette\Utils\Html
+     */
+    public function getControl() : Nette\Utils\Html
     {
-		$this->tempValue = $value;
-		return $this;
-	}
+        $this->tryLoadItems();
+
+        $attrs = [];
+        $control = parent::getControl();
+        $form = $this->getForm();
+
+        $parents = [];
+        foreach ($this->parents as $parent) {
+            $parents[$this->getNormalizeName($parent)] = $parent->getHtmlId();
+        }
+
+        $attrs['data-dependentselectbox-parents'] = Nette\Utils\Json::encode($parents);
+        $attrs['data-dependentselectbox'] = $form->getPresenter()->link($this->lookupPath('Nette\\Application\\UI\\Presenter') . Nette\ComponentModel\IComponent::NAME_SEPARATOR . self::SIGNAL_NAME . '!');
+
+        $control->addAttributes($attrs);
+        return $control;
+    }
 
 
-	/**
-	 * @param array $items
-	 * @param bool $useKeys
-	 * @return self
-	 */
-	public function setItems(array $items, bool $useKeys = true): DependentTrait
+    /**
+     * @return string|int
+     */
+    public function getValue()
     {
-		parent::setItems($items, $useKeys);
+        $this->tryLoadItems();
 
-		if (!in_array($this->tempValue, [null, '', []], true)) {
-			parent::setValue($this->tempValue);
-		}
+        if (!in_array($this->tempValue, [null, '', []], true)) {
+            return $this->tempValue;
+        }
 
-		return $this;
-	}
+        return parent::getValue();
+    }
 
 
-	/**
-	 * @param array $args
-	 * @return NasExt\Forms\DependentData
-	 * @throws NasExt\Forms\DependentCallbackException
-	 */
-	private function getDependentData(array $args = []): DependentData
+    /**
+     * @param string|int $value
+     * @return self
+     */
+    public function setValue($value)
     {
-		if ($this->dependentCallback === null) {
-			throw new NasExt\Forms\DependentCallbackException('Dependent callback for "' . $this->getHtmlId() . '" must be set!');
-		}
-
-		$dependentData = call_user_func_array($this->dependentCallback, $args);
-
-		if (!($dependentData instanceof NasExt\Forms\DependentData) && !($dependentData instanceof NasExt\Forms\Controls\DependentSelectBoxData)) {
-			throw new NasExt\Forms\DependentCallbackException('Callback for "' . $this->getHtmlId() . '" must return NasExt\\Forms\\DependentData instance!');
-		}
-
-		return $dependentData;
-	}
+        $this->tempValue = $value;
+        return $this;
+    }
 
 
-	/**
-	 * @param callable $callback
-	 * @return self
-	 */
-	public function setDependentCallback(callable $callback): DependentTrait
+    /**
+     * @param array $items
+     * @param bool $useKeys
+     * @return self
+     */
+    public function setItems(array $items, bool $useKeys = true)
     {
-		$this->dependentCallback = $callback;
-		return $this;
-	}
+        parent::setItems($items, $useKeys);
+
+        if (!in_array($this->tempValue, [null, '', []], true)) {
+            parent::setValue($this->tempValue);
+        }
+
+        return $this;
+    }
 
 
-	/**
-	 * @param bool $value
-	 * @return self
-	 */
-	public function setDisabledWhenEmpty($value = true): DependentTrait
+    /**
+     * @param array $args
+     * @return NasExt\Forms\DependentData
+     * @throws NasExt\Forms\DependentCallbackException
+     */
+    private function getDependentData(array $args = []): DependentData
     {
-		$this->disabledWhenEmpty = $value;
-		return $this;
-	}
+        if ($this->dependentCallback === null) {
+            throw new NasExt\Forms\DependentCallbackException('Dependent callback for "' . $this->getHtmlId() . '" must be set!');
+        }
+
+        $dependentData = call_user_func_array($this->dependentCallback, $args);
+
+        if (!($dependentData instanceof NasExt\Forms\DependentData) && !($dependentData instanceof NasExt\Forms\Controls\DependentSelectBoxData)) {
+            throw new NasExt\Forms\DependentCallbackException('Callback for "' . $this->getHtmlId() . '" must return NasExt\\Forms\\DependentData instance!');
+        }
+
+        return $dependentData;
+    }
 
 
-	/**
-	 * @param Nette\Forms\Controls\BaseControl $parent
-	 * @return string
-	 */
-	private function getNormalizeName(Nette\Forms\Controls\BaseControl $parent): string
+    /**
+     * @param callable $callback
+     * @return self
+     */
+    public function setDependentCallback(callable $callback)
     {
-		return str_replace('-', '_', $parent->getHtmlId());
-	}
+        $this->dependentCallback = $callback;
+        return $this;
+    }
+
+
+    /**
+     * @param bool $value
+     * @return self
+     */
+    public function setDisabledWhenEmpty($value = true)
+    {
+        $this->disabledWhenEmpty = $value;
+        return $this;
+    }
+
+
+    /**
+     * @param Nette\Forms\Controls\BaseControl $parent
+     * @return string
+     */
+    private function getNormalizeName(Nette\Forms\Controls\BaseControl $parent): string
+    {
+        return str_replace('-', '_', $parent->getHtmlId());
+    }
 }
