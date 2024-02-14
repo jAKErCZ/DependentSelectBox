@@ -50,18 +50,22 @@ class DependentSelectBox extends Nette\Forms\Controls\SelectBox implements Nette
 
 		if ($presenter->isAjax() && $signal === self::SIGNAL_NAME && !$this->isDisabled()) {
 			$parentsNames = [];
-			foreach ($this->parents as $parent) {
-				$value = $presenter->getParameter($this->getNormalizeName($parent));
-				
-				if ($parent instanceof Nette\Forms\Controls\MultiChoiceControl) {
-					$value = explode(',', $value);
-				    	$value = array_filter($value, static function ($val) {return !in_array($val, [null, '', []], true);});
-				}
+            foreach ($this->parents as $parent) {
+                $value = $presenter->getParameter($this->getNormalizeName($parent));
 
-				$parent->setValue($value);
+                if ($parent instanceof Nette\Forms\Controls\MultiSelectBox) {
+                    $value = $value[0];
+                } else {
+                    if ($parent instanceof Nette\Forms\Controls\MultiChoiceControl) {
+                        $value = explode(',', $value);
+                        $value = array_filter($value, static function ($val) {return !in_array($val, [null, '', []], true);});
+                    }
+                }
 
-				$parentsNames[$parent->getName()] = $parent->getValue();
-			}
+                $parent->setValue($value);
+
+                $parentsNames[$parent->getName()] = is_array($parent->getValue()) ? (int)$value : $parent->getValue();
+            }
 
 			$data = $this->getDependentData([$parentsNames]);
 			$presenter->payload->dependentselectbox = [
