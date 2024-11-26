@@ -59,9 +59,9 @@ trait DependentTrait
 
 
     /**
-     * @return string|int
+     * @return mixed
      */
-    public function getValue()
+    public function getValue() : mixed
     {
         $this->tryLoadItems();
 
